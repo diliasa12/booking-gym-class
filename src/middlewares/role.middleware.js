@@ -1,7 +1,11 @@
 export const roleMiddleware = (role) => {
   return (req, res, next) => {
-    if (req.user.role !== role)
-      return res.status(403).json({ message: "forbidden access" });
+    if (req.user.role !== role) {
+      const err = new Error("Access Forbidden");
+      err.statusCode = 403;
+      next(err);
+    }
+
     next();
   };
 };

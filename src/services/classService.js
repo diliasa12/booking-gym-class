@@ -6,7 +6,7 @@ export async function create(judul, body) {
 
   if (existingClass) {
     const err = new Error("Class already exist");
-    err.statusCode = 400;
+    err.statusCode = 409;
     throw err;
   }
 
@@ -45,7 +45,7 @@ export async function updateOneClass(id, title, body) {
   const existingClass = await Class.findOne({ title: title });
   if (existingClass) {
     const err = new Error("Class already exist");
-    err.statuCode = 400;
+    err.statusCode = 409;
     throw err;
   }
   const classes = await Class.findByIdAndUpdate(

@@ -8,19 +8,24 @@ export async function tambahClass(id, userId) {
     throw err;
   }
   const user = await User.findById(userId);
+  if (!user) {
+    const err = new Error("USer not found");
+    err.statusCode = 404;
+    throw err;
+  }
   const classIsExist = user.joinedClasses.some(
     (u) => u.toString() === id.toString()
   );
   if (classIsExist) {
     const err = new Error("Class has been added");
-    err.statusCode = 400;
+    err.statusCode = 409;
     throw err;
   }
   const isFulled =
     joinClass.members.length >= joinClass.capacity ? true : false;
   if (isFulled) {
     const err = new Error("Class is full");
-    err.statusCode = 400;
+    err.statusCode = 409;
     throw err;
   }
   await User.updateOne(
@@ -30,22 +35,27 @@ export async function tambahClass(id, userId) {
   ).populate("joinedClasses");
   await Class.updateOne(joinClass, { $addToSet: { members: user._id } });
   return {
-    succes: true,
+    success: true,
     message: "Successfully add class",
   };
 }
 
-export async function hapusClass(id, email) {
+export async function hapusClass(classId, email) {
   const user = await User.findOne({ email });
+  if (!user) {
+    const err = new Error("USer not found");
+    err.statusCode = 404;
+    throw err;
+  }
   const existingJoinedClass = user.joinedClasses.some(
-    (id) => id.toString() === id.toString()
+    (id) => id.toString() === classId.toString()
   );
   if (!existingJoinedClass) {
     const err = new Error("Class not found");
     err.statusCode = 404;
     throw err;
   }
-  const classes = await Class.findById(id);
+  const classes = await Class.findById(classId);
   classes.members = classes.members.filter(
     (id) => id.toString() !== user._id.toString()
   );

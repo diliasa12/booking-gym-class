@@ -6,8 +6,8 @@ export const authorization = catchAsync(async (req, res, next) => {
   let token;
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    const err = new Error("Access forbidden");
-    err.statusCode = 403;
+    const err = new Error("Unauthorized");
+    err.statusCode = 401;
     throw err;
   }
   token = authHeader.split(" ")[1];

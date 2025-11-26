@@ -11,7 +11,6 @@ export const createClass = catchAsync(async (req, res) => {
   const { title } = req.body;
   const { body } = req;
   const result = await create(title, body);
-  console.log(result);
   res.status(201).json(result);
 });
 
@@ -30,8 +29,8 @@ export const getAllClass = catchAsync(async (req, res) => {
 export const updateClass = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  const result = await updateOneClass(id, req.body.title, body);
-  res.status(201).json(result);
+  const result = await updateOneClass(id, body.title, body);
+  res.status(200).json(result);
 });
 
 export const deleteClass = catchAsync(async (req, res) => {

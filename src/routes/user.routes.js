@@ -3,6 +3,7 @@ import {
   addClass,
   deleteClass,
   getClasses,
+  getClassTersedia,
   getProfile,
 } from "../controllers/user.controller.js";
 import { authorization } from "../middlewares/auth.middleware.js";
@@ -11,6 +12,12 @@ import { roleMiddleware } from "../middlewares/role.middleware.js";
 const routeUser = Router();
 routeUser.get("/profile", authorization, roleMiddleware("user"), getProfile);
 routeUser.get("/classes", authorization, roleMiddleware("user"), getClasses);
+routeUser.get(
+  "/availableclass",
+  authorization,
+  roleMiddleware("user"),
+  getClassTersedia
+);
 routeUser.post(
   "/book/:classId",
   authorization,

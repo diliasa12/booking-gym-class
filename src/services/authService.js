@@ -9,7 +9,7 @@ export async function daftar(email, body) {
   }
   const user = await User.create(body);
   if (!user) {
-    const err = new Error("Failed create User, req.body error");
+    const err = new Error("Failed create User, Invalid Input");
     err.statusCode = 400;
     throw err;
   }
@@ -21,7 +21,7 @@ export async function daftar(email, body) {
   );
   return {
     succes: true,
-    message: "User succesfully created",
+    message: "Registration Successful",
     data: {
       user: user,
       token: token,

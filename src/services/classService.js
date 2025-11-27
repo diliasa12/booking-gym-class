@@ -41,6 +41,7 @@ export async function getClasses(page, limit) {
     data: classes,
   };
 }
+
 export async function updateOneClass(id, title, body) {
   const existingClass = await Class.findOne({ title: title });
   if (existingClass) {

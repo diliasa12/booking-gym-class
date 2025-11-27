@@ -1,5 +1,14 @@
 import User from "../models/user.model.js";
 import Class from "../models/class.model.js";
+export async function getAvailableClass() {
+  const data = await Class.find({
+    $expr: { $gt: ["$capacity", { $size: "$members" }] },
+  });
+  return {
+    success: true,
+    data: data,
+  };
+}
 export async function tambahClass(id, userId) {
   const joinClass = await Class.findById(id);
   if (!joinClass) {

@@ -1,5 +1,10 @@
 import catchAsync from "../utils/catchAsync.js";
-import { hapusClass, tambahClass } from "../services/userService.js";
+import {
+  hapusClass,
+  tambahClass,
+  getAvailableClass,
+} from "../services/userService.js";
+
 export const getProfile = catchAsync(async (req, res) => {
   res.status(200).json({
     success: true,
@@ -8,10 +13,14 @@ export const getProfile = catchAsync(async (req, res) => {
 });
 
 export const getClasses = catchAsync(async (req, res) => {
-  res.status(202).json({
+  res.status(200).json({
     succes: true,
     class: req.user.joinedClasses,
   });
+});
+export const getClassTersedia = catchAsync(async (req, res) => {
+  const result = await getAvailableClass();
+  res.status(200).json(result);
 });
 
 export const addClass = catchAsync(async (req, res) => {

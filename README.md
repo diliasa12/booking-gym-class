@@ -4,7 +4,9 @@ API untuk sistem booking kelas gym dengan autentikasi dan otorisasi berbasis rol
 
 ## Cara Mnejalankan Server
 
+```
 npm run dev
+```
 
 ## Base URL
 

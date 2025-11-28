@@ -7,9 +7,10 @@ const classSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    required: [true, "Enter description"],
   },
-  date: Date,
-  capacity: Number,
+  date: { type: Date, required: [true, "Enter date"] },
+  capacity: { type: Number, required: [true, "enter capacity"] },
   members: [
     {
       type: mongoose.Schema.Types.ObjectId,
